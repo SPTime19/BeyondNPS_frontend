@@ -1,30 +1,30 @@
 
 export const state = () => ({
-  geoMapData: null,
+  markerData: null,
 });
 
 export const mutations = {
-  setGeoMapData(state, payload) {
-    state.geoMapData = payload
+  setMarkerData(state, payload) {
+    state.markerData = payload
   },
 };
 
 export const getters = {
-  getGeoMapData(state) {
-    return state.geoMapData
+  getMarkerData(state) {
+    return state.markerData
   },
 };
 
 export const actions = {
 
-  async FETCH_GEO_MAP_DATA(state, payload) {
-    return this.$axios.$post("/api/session")
+  async FETCH_MARKER_METRIC(state, payload) {
+    let finalUrl = process.env.API.HOST + "/geoMarkers/" + payload.metric;
+    return this.$axios.$get(finalUrl)
       .then((data)=>{
         if(process.env.NODE_ENV === "development"){
           console.log(data)
         }
-        state.commit("setGeoMapData", JSON.parse(data));
-        return data
+        state.commit("setMarkerData", data);
       })
   },
 

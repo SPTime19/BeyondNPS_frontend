@@ -1,6 +1,6 @@
 <template>
-  <section class="section">
-    <landpageHero></landpageHero>
+  <section>
+<!--    <landpageHero></landpageHero>-->
     <analyticsWrapper></analyticsWrapper>
   </section>
 </template>

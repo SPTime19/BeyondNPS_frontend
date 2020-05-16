@@ -20,6 +20,14 @@
     components: {
       companySideBar,
       geoMap
+    },
+    data: function(){
+      return {
+
+      }
+    },
+    mounted() {
+      this.$store.dispatch('api/FETCH_MARKER_METRIC', {metric: "rating"});
     }
   }
 </script>

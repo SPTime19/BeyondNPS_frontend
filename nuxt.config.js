@@ -33,8 +33,7 @@ export default {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: [
-  ],
+  plugins: [{ src: '~plugins/vue-leaflet.js', ssr: false }],
   /*
   ** Nuxt.js dev-modules
   */
@@ -54,6 +53,11 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
+  },
+  env: {
+    API: {
+      HOST: (process.env.NODE_ENV === "development")?"http://localhost:8000":"http://localhost:8000/"
+    }
   },
   /*
   ** Build configuration
