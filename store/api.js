@@ -3,6 +3,7 @@ export const state = () => ({
   markerData: null,
   rankingData: null,
   isDataLoading: true,
+  storeDetails: null
 });
 
 export const mutations = {
@@ -17,6 +18,10 @@ export const mutations = {
   setDataLoading(state, payload) {
     state.isDataLoading = payload
   },
+
+  setStoreDetails(state, payload) {
+    state.storeDetails = payload
+  },
 };
 
 export const getters = {
@@ -28,6 +33,9 @@ export const getters = {
   },
   getDataLoading(state){
     return state.isDataLoading
+  },
+  getStoreDetails(state){
+    return state.storeDetails
   }
 };
 
@@ -56,6 +64,17 @@ export const actions = {
           console.log(data)
         }
         state.commit("setRankedCompanies", data);
+      })
+  },
+
+  async FETCH_STORE_DETAILS(state, payload) {
+    let finalUrl = process.env.API.HOST + "/detail/stores/" + payload.store_id;
+    return this.$axios.$get(finalUrl)
+      .then((data)=>{
+        if(process.env.NODE_ENV === "development"){
+          console.log(data)
+        }
+        state.commit("setStoreDetails", data);
       })
   },
 

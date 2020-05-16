@@ -68,7 +68,8 @@
     methods: {
       latLng:latLng,
       openDetails: function (store) {
-
+        console.log(store)
+        this.$emit('display-store', store.store_id)
       },
       parseCompanyName: function (store_id) {
         return store_id.split("_")[0].split("-").join(" ")
