@@ -26,8 +26,11 @@
 
       }
     },
-    mounted() {
+    mounted: function() {
+      let ref = this;
       this.$store.dispatch('api/FETCH_MARKER_METRIC', {metric: "rating"});
+      this.$store.dispatch('api/FETCH_COMPANY_METRICS', {metric: "rating"})
+      ref.$store.commit("api/setDataLoading", false);
     }
   }
 </script>
