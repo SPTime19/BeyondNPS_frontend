@@ -3,7 +3,8 @@ export const state = () => ({
   markerData: null,
   rankingData: null,
   isDataLoading: true,
-  storeDetails: null
+  storeDetails: null,
+  benchmarkTs: null
 });
 
 export const mutations = {
@@ -22,6 +23,9 @@ export const mutations = {
   setStoreDetails(state, payload) {
     state.storeDetails = payload
   },
+  setBenchmarkTs(state, payload) {
+    state.benchmarkTs = payload
+  },
 };
 
 export const getters = {
@@ -36,6 +40,9 @@ export const getters = {
   },
   getStoreDetails(state){
     return state.storeDetails
+  },
+  getBenchmarkTs(state){
+    return state.benchmarkTs
   }
 };
 
@@ -78,4 +85,16 @@ export const actions = {
       })
   },
 
+  async FETCH_BENCHMARK_METRIC(state, payload) {
+
+    let finalUrl = process.env.API.HOST + "/metric/"+payload.metric+"/store/" + payload.store_id;
+    console.log(finalUrl)
+    return this.$axios.$get(finalUrl)
+      .then((data)=>{
+        if(process.env.NODE_ENV === "development"){
+          console.log(data)
+        }
+        state.commit("setBenchmarkTs", data);
+      })
+  },
 };

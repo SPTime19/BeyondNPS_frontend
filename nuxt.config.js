@@ -44,7 +44,10 @@ export default {
   */
   modules: [
     // Doc: https://buefy.github.io/#/documentation
-    'nuxt-buefy',
+    ['nuxt-buefy', {
+      defaultIconPack: 'fas',
+      materialDesignIconsHRef: "https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+    }],
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
   ],

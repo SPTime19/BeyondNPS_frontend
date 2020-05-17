@@ -1,5 +1,6 @@
 <template>
   <section class="analytics-container">
+  <div class="container">
     <div class="columns">
       <div class="column is-hidden-mobile is-3-tablet">
         <companySideBar></companySideBar>
@@ -10,12 +11,12 @@
     </div>
     <b-modal :active.sync="isModalActive"
              has-modal-card
-             trap-focus
              :destroy-on-hide="false"
              aria-role="dialog"
              aria-modal>
-      <storeMetricsDisplay></storeMetricsDisplay>
+      <storeMetricsDisplay :storeId="activeStoreId"></storeMetricsDisplay>
     </b-modal>
+  </div>
   </section>
 </template>
 
@@ -34,13 +35,16 @@
     data: function () {
       return {
         isModalActive: false,
-        isLoading: false
+        isLoading: false,
+        activeStoreId: ""
       }
     },
     methods: {
       displayStoreMetrics: async function (store_id) {
         this.isLoading = true;
+        this.activeStoreId = store_id;
         let ref = this;
+        this.$store.dispatch('api/FETCH_BENCHMARK_METRIC', {store_id: store_id, metric: "rating"});
         await this.$store.dispatch("api/FETCH_STORE_DETAILS", {store_id: store_id})
           .then(() => {
             ref.isLoading = false;
@@ -59,14 +63,17 @@
     mounted: function () {
       let ref = this;
       this.$store.dispatch('api/FETCH_MARKER_METRIC', {metric: "rating"});
-      this.$store.dispatch('api/FETCH_COMPANY_METRICS', {metric: "rating"})
+      this.$store.dispatch('api/FETCH_COMPANY_METRICS', {metric: "rating"});
       ref.$store.commit("api/setDataLoading", false);
     }
   }
 </script>
 
-<style scoped>
+<style>
 .analytics-container{
   padding: 2rem;
 }
+  .animation-content{
+    max-width: 100% !important;
+  }
 </style>
