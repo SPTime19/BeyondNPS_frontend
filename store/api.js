@@ -4,7 +4,8 @@ export const state = () => ({
   rankingData: null,
   isDataLoading: true,
   storeDetails: null,
-  benchmarkTs: null
+  benchmarkTs: null,
+  companyDetails: null
 });
 
 export const mutations = {
@@ -26,6 +27,9 @@ export const mutations = {
   setBenchmarkTs(state, payload) {
     state.benchmarkTs = payload
   },
+  setCompanyDetails(state, payload) {
+    state.companyDetails = payload
+  },
 };
 
 export const getters = {
@@ -43,7 +47,10 @@ export const getters = {
   },
   getBenchmarkTs(state){
     return state.benchmarkTs
-  }
+  },
+  getCompanyDetails(state) {
+    return state.companyDetails
+  },
 };
 
 export const actions = {
@@ -86,15 +93,25 @@ export const actions = {
   },
 
   async FETCH_BENCHMARK_METRIC(state, payload) {
-
     let finalUrl = process.env.API.HOST + "/metric/"+payload.metric+"/store/" + payload.store_id;
-    console.log(finalUrl)
     return this.$axios.$get(finalUrl)
       .then((data)=>{
         if(process.env.NODE_ENV === "development"){
           console.log(data)
         }
         state.commit("setBenchmarkTs", data);
+      })
+  },
+
+  async FETCH_COMPANY_DETAILS(state, payload) {
+    let finalUrl = process.env.API.HOST + "/detail/company/" + payload.company_id;
+    console.log(finalUrl)
+    return this.$axios.$get(finalUrl)
+      .then((data)=>{
+        if(process.env.NODE_ENV === "development"){
+          console.log(data)
+        }
+        state.commit("setCompanyDetails", data);
       })
   },
 };
