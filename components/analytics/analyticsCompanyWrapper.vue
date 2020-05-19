@@ -1,12 +1,22 @@
 <template>
   <section class="analytics-container">
   <div class="container">
-    <div class="columns">
-      <div class="column is-hidden-mobile is-6-tablet">
+    <div class="columns is-multiline">
+      <div class="column is-12-tablet">
         <companyMetricsDisplay></companyMetricsDisplay>
       </div>
-      <div class="column is-12-mobile is-6-tablet" style="z-index: 40">
-        <geoMap v-on="{'display-store': displayStoreMetrics}"></geoMap>
+      <div class="column is-12-mobile is-12-tablet" style="z-index: 40">
+        <b-tabs position="is-centered" class="block">
+          <b-tab-item label="Map">
+            <div class="column is-12">
+              <geoMap v-if="markerData" v-on="{'display-store': displayStoreMetrics}"></geoMap>
+            </div>
+          </b-tab-item>
+          <b-tab-item label="Metrics">
+            <metricTs></metricTs>
+          </b-tab-item>
+        </b-tabs>
+
       </div>
     </div>
     <b-modal :active.sync="isModalActive"
@@ -24,13 +34,15 @@
   import companyMetricsDisplay from '~/components/analytics/widgets/companyMetricsDisplay'
   import geoMap from '~/components/analytics/widgets/geoMap'
   import storeMetricsDisplay from '~/components/analytics/widgets/storeMetricsDisplay'
+  import metricTs from '~/components/analytics/widgets/metricTs'
 
   export default {
     name: "analyticsWrapper",
     components: {
       companyMetricsDisplay,
       geoMap,
-      storeMetricsDisplay
+      storeMetricsDisplay,
+      metricTs
     },
     data: function () {
       return {
@@ -65,6 +77,11 @@
       this.$store.dispatch('api/FETCH_MARKER_METRIC', {metric: "rating"});
       this.$store.dispatch('api/FETCH_COMPANY_METRICS', {metric: "rating"});
       ref.$store.commit("api/setDataLoading", false);
+    },
+    computed: {
+      markerData: function () {
+        return this.$store.getters["api/getMarkerData"]
+      }
     }
   }
 </script>

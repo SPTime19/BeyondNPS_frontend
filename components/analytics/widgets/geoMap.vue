@@ -3,7 +3,6 @@
     <l-map
       :zoom="zoom"
       :center="spCoordinates"
-      style="height: 80%"
       :options="mapOptions">
       <l-tile-layer
         :url="url"
@@ -88,7 +87,7 @@
 
 <style scoped>
   .geoMap {
-    height: 100vh;
+    height: 55vh;
     width: 100%;
   }
 </style>
