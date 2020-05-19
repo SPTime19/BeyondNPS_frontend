@@ -72,13 +72,36 @@
           </div>
         </div>
       </div>
+
+      <div class="column is-6">
+        <p class="is-size-3 has-text-weight-bold highlight-hook">Metric performance</p>
+        <b-select v-model="selectedMetric" expanded placeholder="Select a metric">
+          <option
+            v-for="option in availableMetrics"
+            :value="option"
+            :key="option.id">
+            {{ option.display }}
+          </option>
+        </b-select>
+        <p class="is-size-12">{{selectedMetric.description}}</p>
+      </div>
+      <div class="column is-12">
+        <rankTSPlot
+          v-if="tsDataIsLoaded"
+          :width="700" :height="300"
+          :chartData="formatTsPlot(benchmarkTs)"
+          :chartdata="formatTsPlot(benchmarkTs)"
+          :options="tsPlotOption"></rankTSPlot>
+      </div>
+
     </div>
-    {{companyDetails}}
+<!--    {{companyDetails}}-->
   </div>
 </template>
 
 <script>
-  import {formatCompanyName,parseStoreIdNumber} from '@@/utils'
+  import {formatCompanyName,parseStoreIdNumber, formatTsPlot} from '@@/utils'
+  import rankTSPlot from '~/components/analytics/widgets/storeDetail/rankTSPlot'
 
   export default {
     name: "companyMetricsDisplay",
@@ -88,9 +111,34 @@
       }
     },
     components: {
+      rankTSPlot
     },
     data: function () {
       return {
+        tsDataIsLoaded: false,
+        selectedMetric: {
+          id: "rating",
+          display: "Review Rating",
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et."
+        },
+        tsPlotOption: {
+          responsive: false,
+          legend: {display: true},
+          title: {
+            display: false,
+          },
+        },
+        availableMetrics: [
+          {
+            id: "rating",
+            display: "Review Rating",
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et."
+          },
+          {
+            id: "product_issues",
+            display: "Product Issues",
+            description: "Lorem  sed do eiusmod tempor incididunt ut labore et."
+          }],
       }
     },
     methods: {
@@ -103,14 +151,30 @@
           return [1,1]
         }
         return [1]
-      }
+      },
+      formatTsPlot:formatTsPlot
     },
     watch: {
+      benchmarkTs(val) {
+        if (val) {
+          this.tsDataIsLoaded = true;
+        }
+      },
+      selectedMetric: async function (val) {
+        if (val) {
+          let ref = this;
+          let payload = {metric: val.id, company_id: this.$route.params["companyid"]};
+          await this.$store.dispatch('api/FETCH_COMPANY_BENCHMARK_METRIC', payload)
+        }
+      }
     },
     computed: {
       companyDetails: function () {
         return this.$store.getters["api/getCompanyDetails"]
       },
+      benchmarkTs: function () {
+        return this.$store.getters["api/getBenchmarkCompanyTs"]
+      }
     }
   }
 </script>
