@@ -27,7 +27,7 @@ export default {
   ],
   styleResources: {
     scss: [
-      '@/assets/scss/*.scss',
+      '@/assets/scss/_bnpsVars.scss',
     ]
   },
   /*
@@ -50,6 +50,7 @@ export default {
     }],
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    '@nuxtjs/style-resources',
   ],
   /*
   ** Axios module configuration

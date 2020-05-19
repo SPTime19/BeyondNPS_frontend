@@ -22,12 +22,12 @@
                       </figure>
                     </div>
                     <div class="column is-9">
-          <span class="is-size-3 has-text-weight-medium">
-            <nuxt-link :to="'/company/' + parseCompanyName(storeDetails['store_id'])"
-                       style="text-transform: capitalize">
-              {{formatCompanyName(storeDetails["store_id"])}}
-            </nuxt-link>
-          </span>
+                      <span class="is-size-3 has-text-weight-medium">
+                        <nuxt-link :to="'/company/' + parseCompanyName(storeDetails['store_id'])"
+                                   style="text-transform: capitalize">
+                          {{formatCompanyName(storeDetails["store_id"])}}
+                        </nuxt-link>
+                      </span>
                       <p class="is-size-6 has-text-weight-medium">Store number:
                         <span class="has-text-weight-normal">{{storeDetails['store_id'].split("_")[1]}}</span>
                       </p>
@@ -237,6 +237,7 @@
 <script>
   import rankRadarPlot from '~/components/analytics/widgets/storeDetail/rankRadarPlot'
   import rankTSPlot from '~/components/analytics/widgets/storeDetail/rankTSPlot'
+  import {formatCompanyName} from '@@/utils'
 
   export default {
     name: "storeMetricsDisplay",
@@ -254,10 +255,19 @@
         selectedMetric: {
           id: "rating",
           display: "Review Rating",
-          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et."},
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et."
+        },
         availableMetrics: [
-          {id: "rating", display: "Review Rating", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et."},
-          {id: "product_issues", display: "Product Issues", description: "Lorem  sed do eiusmod tempor incididunt ut labore et."}],
+          {
+            id: "rating",
+            display: "Review Rating",
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et."
+          },
+          {
+            id: "product_issues",
+            display: "Product Issues",
+            description: "Lorem  sed do eiusmod tempor incididunt ut labore et."
+          }],
         tsPlotOption: {
           responsive: false,
           legend: {display: true},
@@ -339,13 +349,7 @@
       parseCompanyName: function (store_id) {
         return store_id.split("_")[0]
       },
-      formatCompanyName: function (store_id) {
-        let companyName = store_id.split("_")[0];
-        if (companyName.includes("-")) {
-          return companyName.split("-").join(" ")
-        }
-        return companyName
-      },
+      formatCompanyName: formatCompanyName,
       formatRankPercentile: function (rank) {
         return Math.floor(rank) + " top percentile"
       },

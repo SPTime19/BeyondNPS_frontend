@@ -1,0 +1,28 @@
+@import "~bulma/sass/utilities/initial-variables";
+@import "~bulma/sass/utilities/functions";
+@import "~bulma/sass/utilities/derived-variables";
+@import "~bulma/sass/utilities/mixins";
+@import "~bulma/sass/utilities/controls";
+
+
+// Set your colors
+
+$yellow: #FFB71A;
+$orange: #EC4E20;
+$blue: #575A89;
+$green: #8AFA03;
+$white: #F3E8EE;
+
+// Update Bulma's global variables
+$family-sans-serif: 'Josefin Sans', sans-serif;
+$family-primary: 'Josefin Sans', sans-serif;
+$family-monospace: "Lusitana", sans-serif;
+
+$primary: #2F2D41;
+$link: $orange;
+$success: $green;
+$info: $blue;
+
+$link-light: rgba(248, 83, 34, 0.21);
+$success-light: rgba(138, 250, 3, 0.21);
+$blue-light: rgba(87, 90, 137, 0.4);

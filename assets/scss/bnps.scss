@@ -1,27 +1,11 @@
+//@import "~bulma/sass/utilities/_all";
 
-// Import Bulma's core
-@import "~bulma/sass/utilities/_all";
 
 // Import a Google Font
 @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Lusitana:wght@400;700&display=swap");
-
-// Set your colors
-
-$yellow: #FFB71A;
-$orange: #EC4E20;
-$blue: #575A89;
-$green: #8AFA03;
-$white: #F3E8EE;
-
-// Update Bulma's global variables
-$family-sans-serif: 'Josefin Sans', sans-serif;
-$family-primary: 'Josefin Sans', sans-serif;
-$family-monospace: "Lusitana", sans-serif;
-
-$primary: #2F2D41;
-$link: $orange;
-$success: $green;
-$info: $blue;
+@import "bnpsVars";
+@import "~bulma/sass/utilities/animations";
+@import "~bulma/sass/base/_all";
 
 // Setup $colors to use as bulma classes (e.g. 'is-twitter')
 $colors: (
@@ -36,7 +20,7 @@ $colors: (
 
 
 $footer-background-color: $primary;
-
-// Import Bulma and Buefy styles
+//
+//// Import Bulma and Buefy styles
 @import "~bulma";
 @import "~buefy/src/scss/buefy";
