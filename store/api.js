@@ -75,6 +75,19 @@ export const actions = {
       })
   },
 
+  async FETCH_MARKER_METRIC_COMPANY(state, payload) {
+    let finalUrl = process.env.API.HOST + "/geoMarkers/" + payload.metric+ "/company/"+payload.company_id;
+    state.commit("setDataLoading", true);
+
+    return this.$axios.$get(finalUrl)
+      .then((data)=>{
+        if(process.env.NODE_ENV === "development"){
+          console.log(data)
+        }
+        state.commit("setMarkerData", data);
+      })
+  },
+
   async FETCH_COMPANY_METRICS(state, payload) {
     let finalUrl = process.env.API.HOST + "/ranked/companies/" + payload.metric;
     state.commit("setDataLoading", true);

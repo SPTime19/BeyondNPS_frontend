@@ -22,13 +22,15 @@
         <div class="column is-12 columns is-multiline">
           <div class="column is-6">
             <p class="is-size-5">Best Store</p>
-            <b-button outlined size="is-medium" type="is-success">
+            <b-button outlined size="is-medium" type="is-success"
+                      @click="focusStore(companyDetails['highlight_stores']['best_store'])">
               Store {{parseStoreIdNumber(companyDetails["highlight_stores"]["best_store"]["store_id"])}}
             </b-button>
           </div>
           <div class="column is-6">
             <p class="is-size-5">Worst Store</p>
-            <b-button outlined size="is-medium" type="is-danger">
+            <b-button outlined size="is-medium" type="is-danger"
+                      @click="focusStore(companyDetails['highlight_stores']['worst_store'])">
               Store {{parseStoreIdNumber(companyDetails["highlight_stores"]["worst_store"]["store_id"])}}
             </b-button>
           </div>
@@ -38,6 +40,7 @@
       <div class="column columns">
         <div class="column is-6" style="padding: 2rem 1rem;">
           <div class="column is-12 columns is-multiline warning-background">
+            <div class="box-container-inner"></div>
             <div class="column is-7 content">
               <p class="is-size-4 has-text-weight-medium">Warning!</p>
               <p>These stores are <b>getting worst</b> in at least one metric for 2 consecutive quarters!</p>
@@ -48,7 +51,8 @@
                    style="padding: 2px"
                    v-for="(store,idx) in companyDetails['perfomants']['worsening']"
                    :key="idx">
-                <b-button outlined expanded size="is-medium" type="is-danger">
+                <b-button outlined expanded size="is-medium" type="is-danger"
+                          @click="focusStore(store)">
                   Store {{parseStoreIdNumber(store.store_id)}}
                 </b-button>
                 <!--              <b-icon style="font-size: small" size="is-small" type="is-danger" icon="exclamation"-->
@@ -59,6 +63,7 @@
         </div>
         <div class="column is-6" style="padding: 2rem 1rem;">
           <div class="column is-12 columns is-multiline praise-background">
+            <div class="box-container-inner"></div>
             <div class="column is-7 content">
               <p class="is-size-4 has-text-weight-medium">Good Job!</p>
               <p>These stores are <b>getting <span class="has-text-primary">better</span></b> in at least one metric for 2 consecutive quarters!</p>
@@ -69,7 +74,8 @@
                    style="padding: 2px"
                    v-for="(store,idx) in companyDetails['perfomants']['improving']"
                    :key="idx">
-                <b-button outlined size="is-medium" expanded type="is-primary">
+                <b-button outlined size="is-medium" expanded type="is-primary"
+                          @click="focusStore(store)">
                   Store {{parseStoreIdNumber(store.store_id)}}
                 </b-button>
               </div>
@@ -107,6 +113,9 @@
         }
         return [1]
       },
+      focusStore: function (store) {
+        this.$emit("focus-store", {reference: [store.latitude, store.longitude]})
+      }
     },
 
     computed: {
@@ -121,9 +130,24 @@
 .warning-background{
   background-color: $link-light;
   border-radius: 1rem;
+  position: relative;
 }
 .praise-background{
   background-color: $success-light;
   border-radius: 1rem;
+  position: relative;
+}
+
+
+.box-container-inner {
+  bottom: 0;
+  /* The box-shadow is added here now */
+  box-shadow: 0 4px 5px rgba(0,0,0,0.3);
+  filter: blur(6px);
+  height: 94%;
+  left: 3%;
+  position: absolute;
+  width: 94%;
+  z-index: -1;
 }
 </style>

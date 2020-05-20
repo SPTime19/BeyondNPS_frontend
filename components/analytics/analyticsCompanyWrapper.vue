@@ -3,13 +3,15 @@
   <div class="container">
     <div class="columns is-multiline">
       <div class="column is-12-tablet">
-        <companyMetricsDisplay></companyMetricsDisplay>
+        <companyMetricsDisplay v-on="{'focus-store': focusMarker}"></companyMetricsDisplay>
       </div>
       <div class="column is-12-mobile is-12-tablet" style="z-index: 40">
         <b-tabs position="is-centered" class="block">
           <b-tab-item label="Map">
             <div class="column is-12">
-              <geoMap v-if="markerData" v-on="{'display-store': displayStoreMetrics}"></geoMap>
+              <geoMap v-if="markerData"
+                      :selectedMarker="selectedMarker"
+                      v-on="{'display-store': displayStoreMetrics}"></geoMap>
             </div>
           </b-tab-item>
           <b-tab-item label="Metrics">
@@ -48,7 +50,8 @@
       return {
         isModalActive: false,
         isLoading: false,
-        activeStoreId: ""
+        activeStoreId: "",
+        selectedMarker: null
       }
     },
     methods: {
@@ -70,11 +73,14 @@
               iconPack: 'fas'
             })
           })
+      },
+      focusMarker(payload){
+        this.selectedMarker = payload.reference
       }
     },
     mounted: function () {
       let ref = this;
-      this.$store.dispatch('api/FETCH_MARKER_METRIC', {metric: "rating"});
+      this.$store.dispatch('api/FETCH_MARKER_METRIC_COMPANY', {metric: "rating", company_id: this.$route.params["companyid"]});
       this.$store.dispatch('api/FETCH_COMPANY_METRICS', {metric: "rating"});
       ref.$store.commit("api/setDataLoading", false);
     },

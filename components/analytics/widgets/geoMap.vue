@@ -7,10 +7,11 @@
       <l-tile-layer
         :url="url"
         :attribution="attribution"/>
-      <vue-marker-cluster>
+      <vue-marker-cluster ref="clusterMarker">
         <l-marker :lat-lng="latLng(store['latitude'], store['longitude'])"
+                  ref="markersRef"
                   v-for="(store,idx) in markerData" :key="idx">
-          <l-popup>
+          <l-popup >
             <div class="columns is-multiline">
               <div class="column is-8">
                 <p class="is-size-5">{{parseCompanyName(store["store_id"])}}</p>
@@ -36,9 +37,17 @@
   import {latLng} from "leaflet";
   import {LMap, LTileLayer, LMarker, LPopup, LTooltip} from "vue2-leaflet";
   import Vue2LeafletMarkerCluster from 'vue2-leaflet-markercluster'
+  import { MarkerClusterGroup } from 'leaflet.markercluster'
 
   export default {
     name: "geoMap",
+    props:{
+      selectedMarker: {
+        type: Array,
+        required: false,
+        default:null
+      }
+    },
     components: {
       LMap,
       LTileLayer,
@@ -61,6 +70,32 @@
         showParagraph: false,
         mapOptions: {
           zoomSnap: 0.5
+        },
+        markerObjects: []
+      }
+    },
+    mounted: function() {
+      this.$nextTick(() => {
+        this.markerObjects = {}
+        let tmpMarkers = this.$refs.markersRef.map(ref => ref.mapObject)
+        for(let idx in tmpMarkers){
+          this.markerObjects[[tmpMarkers[idx].getLatLng().toString()]] = tmpMarkers[idx]
+        }
+      });
+    },
+    watch:{
+      selectedMarker(val){
+        if(val){
+          let lat = val[0];
+          let long = val[1];
+          let e = latLng(lat, long).toString();
+          if(Object.keys(this.markerObjects).includes(e)){
+            var myMarkerClusterGroup = this.$refs.clusterMarker.mapObject;
+            let m = this.markerObjects[e];
+            myMarkerClusterGroup.zoomToShowLayer(m, function() {
+              m.openPopup();
+            });
+          }
         }
       }
     },
