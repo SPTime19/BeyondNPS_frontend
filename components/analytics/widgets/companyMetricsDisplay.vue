@@ -84,7 +84,6 @@
         </div>
       </div>
     </div>
-<!--    {{companyDetails}}-->
   </div>
 </template>
 
@@ -138,10 +137,10 @@
   position: relative;
 }
 
-
+/*
 .box-container-inner {
-  bottom: 0;
-  /* The box-shadow is added here now */
+bottom: 0;
+The box-shadow is added here now
   box-shadow: 0 4px 5px rgba(0,0,0,0.3);
   filter: blur(6px);
   height: 94%;
@@ -149,5 +148,5 @@
   position: absolute;
   width: 94%;
   z-index: -1;
-}
+}*/
 </style>
