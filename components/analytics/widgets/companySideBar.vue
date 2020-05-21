@@ -2,7 +2,7 @@
   <section>
     <div class="columns is-multiline">
       <div class="column is-12">
-        <p class="is-size-4">Metrics</p>
+        <p class="is-size-4 has-text-weight-bold">Metrics</p>
       </div>
       <div class="column is-12">
         <b-select v-model="selectedMetric" expanded placeholder="Select a metric">
@@ -13,7 +13,7 @@
             {{ option.display }}
           </option>
         </b-select>
-        <p class="is-size-5 has-text-weight-bold" style="margin-top: 1rem">{{selectedMetric.display}}</p>
+        <p class="is-size-5 has-text-weight-medium" style="margin-top: 1rem">{{selectedMetric.display}}</p>
         <p class="is-size-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et.</p>
       </div>
       <div class="column is-12">
@@ -31,6 +31,7 @@
 <script>
   import topKMarkers from '~/components/analytics/widgets/sidebar/topKMarkers'
   import rankBarPlot from '~/components/analytics/widgets/sidebar/rankBarPlot'
+  import {formatCompanyName} from "@@/utils"
 
   export default {
     name: "companySideBar",
@@ -57,7 +58,7 @@
     methods: {
       formatRankToPlot: function (rankData) {
         if(rankData){
-          let companies = Object.keys(rankData);
+          let companies = Object.keys(rankData).map((comp)=> formatCompanyName(comp));
           let ranks = Object.values(rankData);
 
           let background = [];

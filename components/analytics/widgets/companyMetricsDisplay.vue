@@ -5,7 +5,7 @@
         <div class="column is-4">
           <figure class='image is-1by1'>
             <img alt="Image not available" style="border-radius: 1rem"
-                 :src="require('@/assets/images/'+ 'magazine-luiza' +'.jpg')">
+                 :src="require('@/assets/images/'+ companyDetails['company_id'] +'.jpg')">
           </figure>
         </div>
         <div class="column is-8">
@@ -38,15 +38,18 @@
       </div>
 
       <div class="column columns">
-        <div class="column is-6" style="padding: 2rem 1rem;">
-          <div class="column is-12 columns is-multiline warning-background">
+        <div class="column is-6"
+             style="padding: 2rem 1rem;">
+          <div class="column is-12 columns is-multiline warning-background is-vcentered">
             <div class="box-container-inner"></div>
             <div class="column is-7 content">
               <p class="is-size-4 has-text-weight-medium">Warning!</p>
               <p>These stores are <b>getting worst</b> in at least one metric for 2 consecutive quarters!</p>
               <p class="is-size-7">*See store details to get more information</p>
             </div>
-            <div class="column is-5 columns is-multiline has-text-centered" style="padding: 5rem 1rem 1rem 1rem">
+            <div class="column is-5 columns is-multiline has-text-centered"
+                 v-if="companyDetails['perfomants']['worsening'] && companyDetails['perfomants']['worsening'].length > 0"
+                 style="padding: 5rem 1rem 1rem 1rem">
               <div class="column is-12"
                    style="padding: 2px"
                    v-for="(store,idx) in companyDetails['perfomants']['worsening']"
@@ -59,17 +62,22 @@
                 <!--                      v-for="(level, j) in getWarningLevel(store.worsening)" :key="j"></b-icon>-->
               </div>
             </div>
+            <div class="column">
+              <p class="is-size-6 is-gray">No information available for this company.</p>
+            </div>
           </div>
         </div>
         <div class="column is-6" style="padding: 2rem 1rem;">
-          <div class="column is-12 columns is-multiline praise-background">
+          <div class="column is-12 columns is-multiline praise-background is-vcentered">
             <div class="box-container-inner"></div>
             <div class="column is-7 content">
               <p class="is-size-4 has-text-weight-medium">Good Job!</p>
               <p>These stores are <b>getting <span class="has-text-primary">better</span></b> in at least one metric for 2 consecutive quarters!</p>
               <p class="is-size-7">*See store details to get more information</p>
             </div>
-            <div class="column is-5 columns is-multiline has-text-centered" style="padding: 5rem 1rem 1rem 1rem">
+            <div class="column is-5 columns is-multiline has-text-centered"
+                 v-if="companyDetails['perfomants']['improving'] && companyDetails['perfomants']['improving'].length > 0"
+                 style="padding: 5rem 1rem 1rem 1rem">
               <div class="column is-12"
                    style="padding: 2px"
                    v-for="(store,idx) in companyDetails['perfomants']['improving']"
@@ -79,6 +87,9 @@
                   Store {{parseStoreIdNumber(store.store_id)}}
                 </b-button>
               </div>
+            </div>
+            <div class="column">
+              <p class="is-size-6 is-gray">No information available for this company.</p>
             </div>
           </div>
         </div>

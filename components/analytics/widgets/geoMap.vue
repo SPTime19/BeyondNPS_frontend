@@ -1,6 +1,7 @@
 <template>
-  <div class="geoMap" style="overflow: auto">
+  <div class="geoMap" :class="{'geoMap-main': isMainPage}" style="overflow: auto">
     <l-map
+      v-if="markerData"
       :zoom="zoom"
       :center="spCoordinates"
       :options="mapOptions">
@@ -99,6 +100,37 @@
         </vue-marker-cluster>
       </l-layer-group>
 
+      <l-layer-group
+        layer-type="overlay"
+        name="Great Rank"
+        :visible="true">
+        <vue-marker-cluster ref="clusterMarker">
+          <l-marker :lat-lng="latLng(store['latitude'], store['longitude'])"
+                    ref="markersRef"
+                    v-for="(store,idx) in greatStores" :key="idx">
+            <l-popup>
+              <div class="columns is-multiline">
+                <div class="column is-12 has-text-centered">
+                  <p class="is-size-5 margin-pop" style="text-transform: capitalize">
+                    {{parseCompanyName(store["store_id"])}}</p>
+                </div>
+                <div class="column is-12">
+                  <p class="is-size-6 margin-pop">Store Id: {{parseCompanyId(store["store_id"])}}</p>
+                  <p class="is-size-6 margin-pop">General Ranking:
+                    <span class="has-text-weight-bold"
+                          :style="{'color': evalMapColor[store['metric_eval']]}">{{store["metric_eval"]}}</span></p>
+                  <!--                <p class="is-size-6">Percentile: {{formatRank(store["metric_rank"])}}</p>-->
+                </div>
+                <div class="column is-12">
+                  <b-button type="is-info" expanded @click="openDetails(store)">See details</b-button>
+                </div>
+              </div>
+            </l-popup>
+          </l-marker>
+        </vue-marker-cluster>
+      </l-layer-group>
+
+
 
     </l-map>
     <b-loading :is-full-page="false" :active.sync="isLoading" :can-cancel="false"></b-loading>
@@ -117,6 +149,11 @@
         type: Array,
         required: false,
         default: null
+      },
+      isMainPage:{
+        type: Boolean,
+        required: false,
+        default: false
       }
     },
     components: {
@@ -147,7 +184,8 @@
         evalMapColor: {
           "Poor": "red",
           "Average": "#FFB71A",
-          "Good": "#8AFA03"
+          "Good": "#575A89",
+          "Great": "#8AFA03"
         },
         radioFilter: ""
       }
@@ -203,18 +241,26 @@
         if(this.markerData){
           return this.markerData.filter((storeObj)=> storeObj.metric_eval === "Poor")
         }
+        return []
       },
       avgStores: function () {
         if(this.markerData){
           return this.markerData.filter((storeObj)=> storeObj.metric_eval === "Average")
         }
+        return []
       },
       goodStores: function () {
         if(this.markerData){
           return this.markerData.filter((storeObj)=> storeObj.metric_eval === "Good")
         }
+        return []
       },
-
+      greatStores: function () {
+        if(this.markerData){
+          return this.markerData.filter((storeObj)=> storeObj.metric_eval === "Great")
+        }
+        return []
+      },
     }
   }
 </script>
@@ -222,6 +268,10 @@
 <style scoped>
   .geoMap {
     height: 55vh;
+    width: 100%;
+  }
+  .geoMap-main {
+    height: 70vh !important;
     width: 100%;
   }
 

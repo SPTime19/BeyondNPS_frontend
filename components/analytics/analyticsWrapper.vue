@@ -6,7 +6,7 @@
         <companySideBar></companySideBar>
       </div>
       <div class="column is-12-mobile is-9-tablet" style="z-index: 40">
-        <geoMap v-on="{'display-store': displayStoreMetrics}"></geoMap>
+        <geoMap v-on="{'display-store': displayStoreMetrics}" :isMainPage="true"></geoMap>
       </div>
     </div>
     <b-modal :active.sync="isModalActive"
@@ -17,6 +17,7 @@
       <storeMetricsDisplay :storeId="activeStoreId"></storeMetricsDisplay>
     </b-modal>
   </div>
+    <b-loading :is-full-page="true" :active.sync="isLoading" :can-cancel="false"></b-loading>
   </section>
 </template>
 
@@ -44,7 +45,7 @@
         this.isLoading = true;
         this.activeStoreId = store_id;
         let ref = this;
-        this.$store.dispatch('api/FETCH_BENCHMARK_METRIC', {store_id: store_id, metric: "rating"});
+        await this.$store.dispatch('api/FETCH_BENCHMARK_METRIC', {store_id: store_id, metric: "rating"});
         await this.$store.dispatch("api/FETCH_STORE_DETAILS", {store_id: store_id})
           .then(() => {
             ref.isLoading = false;

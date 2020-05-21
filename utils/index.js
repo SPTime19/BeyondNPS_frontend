@@ -6,6 +6,10 @@ export function formatCompanyName(store_id) {
   return companyName
 }
 
+export function formatIssueType(issue_id) {
+  return issue_id.split("_").join(" ")
+}
+
 export function parseStoreIdNumber(storeId) {
   return storeId.split("_")[1]
 }

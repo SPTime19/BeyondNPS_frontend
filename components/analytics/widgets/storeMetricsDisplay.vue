@@ -28,12 +28,12 @@
                           {{formatCompanyName(storeDetails["store_id"])}}
                         </nuxt-link>
                       </span>
-                      <p class="is-size-6 has-text-weight-medium">Store number:
+                      <p class="is-size-6 has-text-weight-medium">Store id:
                         <span class="has-text-weight-normal">{{storeDetails['store_id'].split("_")[1]}}</span>
                       </p>
-                      <p class="is-size-6 has-text-weight-medium">(Approx.) Address:
-                        <span class="has-text-weight-normal">{{'[GET LOCATION FROM GEOCOORD]'}}</span>
-                      </p>
+<!--                      <p class="is-size-6 has-text-weight-medium">(Approx.) Address:-->
+<!--                        <span class="has-text-weight-normal">{{'[GET LOCATION FROM GEOCOORD]'}}</span>-->
+<!--                      </p>-->
                     </div>
                     <div class="column is-12 columns is-multiline">
                       <!--            <div class="column is-12">-->
@@ -109,7 +109,7 @@
 
         <div class="column is-12 columns is-multiline" style="position: relative;top: -150px;padding: 1rem 3rem">
           <div class="column is-12">
-            <p id="good-points" class="is-size-4 has-text-weight-bold highlight-hook">What is this store good at?</p>
+            <p id="good-points" class="is-size-4 has-text-weight-medium highlight-hook">What is this store good at?</p>
             <p class="is-size-5 has-text-weight-light" v-for="(issue, idx) in storeDetails['highlights']['best']"
                :key="idx">
 
@@ -141,7 +141,7 @@
           </div>
 
           <div class="column is-12">
-            <p id="problems" class="is-size-4 has-text-weight-bold highlight-hook">What kind of problem should I expect
+            <p id="problems" class="is-size-4 has-text-weight-medium highlight-hook">What kind of problem should I expect
               when buying from this store?</p>
             <p class="is-size-5 has-text-weight-light" v-for="(issue, idx) in storeDetails['highlights']['worst']"
                :key="idx">
@@ -171,7 +171,7 @@
           </div>
 
           <div class="column is-12">
-            <p id="improving" class="is-size-4 has-text-weight-bold highlight-hook">Is this store improving their
+            <p id="improving" class="is-size-4 has-text-weight-medium highlight-hook">Is this store improving their
               customer support metrics?</p>
             <p v-if="storeDetails['performance']['positive'].length === 0" class="is-size-5 has-text-weight-light">This
               store is not improving in any metric.</p>
@@ -189,10 +189,10 @@
           </div>
 
           <div class="column is-12">
-            <p id="worsening" class="is-size-4 has-text-weight-bold highlight-hook">Are there any aspect that this store
+            <p id="worsening" class="is-size-4 has-text-weight-medium highlight-hook">Are there any aspect that this store
               is getting worse at?</p>
             <p v-if="storeDetails['performance']['negative'].length === 0" class="is-size-5 has-text-weight-light">This
-              store is not getting worst in any metric.</p>
+              store is not getting worse in any metric.</p>
             <p class="is-size-5 has-text-weight-light"
 
                v-for="(issue, idx) in storeDetails['performance']['negative']"
@@ -220,7 +220,7 @@
             </b-select>
             <p class="is-size-6">{{selectedMetric.description}}</p>
           </div>
-          <div class="column is-6">
+          <div class="column is-12">
             <rankTSPlot
               v-if="tsDataIsLoaded"
               :width="700" :height="300"
@@ -237,7 +237,7 @@
 <script>
   import rankRadarPlot from '~/components/analytics/widgets/storeDetail/rankRadarPlot'
   import rankTSPlot from '~/components/analytics/widgets/storeDetail/rankTSPlot'
-  import {formatCompanyName} from '@@/utils'
+  import {formatCompanyName, formatIssueType} from '@@/utils'
 
   export default {
     name: "storeMetricsDisplay",
@@ -380,11 +380,12 @@
       formatRadarPlot: function (storeData) {
         if (storeData) {
           let rankData = storeData["highlights"]["general"]
-          let issues = rankData.map((v) => v.index);
+          let issues = rankData.map((v) => formatIssueType(v.index));
           let ranks = rankData.map((v) => v.rank_val);
 
           let dataset = [{
             data: ranks,
+            label: "Percentile",
             borderColor: "#575A89"
           }];
 
@@ -416,9 +417,15 @@
     },
     computed: {
       storeDetails: function () {
+        if(this.$store.getters["api/getStoreDetails"]){
+          this.radarDataIsLoaded = true
+        }
         return this.$store.getters["api/getStoreDetails"]
       },
       benchmarkTs: function () {
+        if(this.$store.getters["api/getBenchmarkTs"]){
+          this.tsDataIsLoaded = true
+        }
         return this.$store.getters["api/getBenchmarkTs"]
       }
     }
