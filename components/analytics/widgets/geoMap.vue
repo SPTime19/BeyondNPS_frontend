@@ -7,27 +7,99 @@
       <l-tile-layer
         :url="url"
         :attribution="attribution"/>
-      <vue-marker-cluster ref="clusterMarker">
-        <l-marker :lat-lng="latLng(store['latitude'], store['longitude'])"
-                  ref="markersRef"
-                  v-for="(store,idx) in markerData" :key="idx">
-          <l-popup >
-            <div class="columns is-multiline">
-              <div class="column is-8">
-                <p class="is-size-5">{{parseCompanyName(store["store_id"])}}</p>
+      <l-control-layers ref="control"></l-control-layers>
+
+      <l-layer-group
+        layer-type="overlay"
+        name="Poor Rank"
+        :visible="true">
+        <vue-marker-cluster ref="clusterMarker">
+          <l-marker :lat-lng="latLng(store['latitude'], store['longitude'])"
+                    ref="markersRef"
+                    v-for="(store,idx) in poorStores" :key="idx">
+            <l-popup>
+              <div class="columns is-multiline">
+                <div class="column is-12 has-text-centered">
+                  <p class="is-size-5 margin-pop" style="text-transform: capitalize">
+                    {{parseCompanyName(store["store_id"])}}</p>
+                </div>
+                <div class="column is-12">
+                  <p class="is-size-6 margin-pop">Store Id: {{parseCompanyId(store["store_id"])}}</p>
+                  <p class="is-size-6 margin-pop">General Ranking:
+                    <span class="has-text-weight-bold"
+                          :style="{'color': evalMapColor[store['metric_eval']]}">{{store["metric_eval"]}}</span></p>
+                  <!--                <p class="is-size-6">Percentile: {{formatRank(store["metric_rank"])}}</p>-->
+                </div>
+                <div class="column is-12">
+                  <b-button type="is-info" expanded @click="openDetails(store)">See details</b-button>
+                </div>
               </div>
-              <div class="column is-4"></div>
-              <div class="column is-12">
-                <p class="is-size-6">General Ranking: <span class="has-font-weight-bold">{{store["metric_eval"]}}</span></p>
-                <p class="is-size-6">Percentile: {{formatRank(store["metric_rank"])}}</p>
+            </l-popup>
+          </l-marker>
+        </vue-marker-cluster>
+      </l-layer-group>
+
+      <l-layer-group
+        layer-type="overlay"
+        name="Average Rank"
+        :visible="true">
+        <vue-marker-cluster ref="clusterMarker">
+          <l-marker :lat-lng="latLng(store['latitude'], store['longitude'])"
+                    ref="markersRef"
+                    v-for="(store,idx) in avgStores" :key="idx">
+            <l-popup>
+              <div class="columns is-multiline">
+                <div class="column is-12 has-text-centered">
+                  <p class="is-size-5 margin-pop" style="text-transform: capitalize">
+                    {{parseCompanyName(store["store_id"])}}</p>
+                </div>
+                <div class="column is-12">
+                  <p class="is-size-6 margin-pop">Store Id: {{parseCompanyId(store["store_id"])}}</p>
+                  <p class="is-size-6 margin-pop">General Ranking:
+                    <span class="has-text-weight-bold"
+                          :style="{'color': evalMapColor[store['metric_eval']]}">{{store["metric_eval"]}}</span></p>
+                  <!--                <p class="is-size-6">Percentile: {{formatRank(store["metric_rank"])}}</p>-->
+                </div>
+                <div class="column is-12">
+                  <b-button type="is-info" expanded @click="openDetails(store)">See details</b-button>
+                </div>
               </div>
-              <div class="column is-12">
-                <b-button type="is-info" expanded @click="openDetails(store)">See details</b-button>
+            </l-popup>
+          </l-marker>
+        </vue-marker-cluster>
+      </l-layer-group>
+
+      <l-layer-group
+        layer-type="overlay"
+        name="Good Rank"
+        :visible="true">
+        <vue-marker-cluster ref="clusterMarker">
+          <l-marker :lat-lng="latLng(store['latitude'], store['longitude'])"
+                    ref="markersRef"
+                    v-for="(store,idx) in goodStores" :key="idx">
+            <l-popup>
+              <div class="columns is-multiline">
+                <div class="column is-12 has-text-centered">
+                  <p class="is-size-5 margin-pop" style="text-transform: capitalize">
+                    {{parseCompanyName(store["store_id"])}}</p>
+                </div>
+                <div class="column is-12">
+                  <p class="is-size-6 margin-pop">Store Id: {{parseCompanyId(store["store_id"])}}</p>
+                  <p class="is-size-6 margin-pop">General Ranking:
+                    <span class="has-text-weight-bold"
+                          :style="{'color': evalMapColor[store['metric_eval']]}">{{store["metric_eval"]}}</span></p>
+                  <!--                <p class="is-size-6">Percentile: {{formatRank(store["metric_rank"])}}</p>-->
+                </div>
+                <div class="column is-12">
+                  <b-button type="is-info" expanded @click="openDetails(store)">See details</b-button>
+                </div>
               </div>
-            </div>
-          </l-popup>
-        </l-marker>
-      </vue-marker-cluster>
+            </l-popup>
+          </l-marker>
+        </vue-marker-cluster>
+      </l-layer-group>
+
+
     </l-map>
     <b-loading :is-full-page="false" :active.sync="isLoading" :can-cancel="false"></b-loading>
   </div>
@@ -35,17 +107,16 @@
 
 <script>
   import {latLng} from "leaflet";
-  import {LMap, LTileLayer, LMarker, LPopup, LTooltip} from "vue2-leaflet";
+  import {LMap, LTileLayer, LMarker, LPopup, LTooltip, LControlLayers, LLayerGroup} from "vue2-leaflet";
   import Vue2LeafletMarkerCluster from 'vue2-leaflet-markercluster'
-  import { MarkerClusterGroup } from 'leaflet.markercluster'
 
   export default {
     name: "geoMap",
-    props:{
+    props: {
       selectedMarker: {
         type: Array,
         required: false,
-        default:null
+        default: null
       }
     },
     components: {
@@ -54,7 +125,8 @@
       LMarker,
       LPopup,
       LTooltip,
-      Vue2LeafletMarkerCluster
+      Vue2LeafletMarkerCluster,
+      LControlLayers, LLayerGroup
     },
     data: function () {
       return {
@@ -71,28 +143,36 @@
         mapOptions: {
           zoomSnap: 0.5
         },
-        markerObjects: []
+        markerObjects: [],
+        evalMapColor: {
+          "Poor": "red",
+          "Average": "#FFB71A",
+          "Good": "#8AFA03"
+        },
+        radioFilter: ""
       }
     },
-    mounted: function() {
+    mounted: function () {
       this.$nextTick(() => {
         this.markerObjects = {}
-        let tmpMarkers = this.$refs.markersRef.map(ref => ref.mapObject)
-        for(let idx in tmpMarkers){
-          this.markerObjects[[tmpMarkers[idx].getLatLng().toString()]] = tmpMarkers[idx]
+        if (this.$refs.markersRef) {
+          let tmpMarkers = this.$refs.markersRef.map(ref => ref.mapObject)
+          for (let idx in tmpMarkers) {
+            this.markerObjects[[tmpMarkers[idx].getLatLng().toString()]] = tmpMarkers[idx]
+          }
         }
       });
     },
-    watch:{
-      selectedMarker(val){
-        if(val){
+    watch: {
+      selectedMarker(val) {
+        if (val) {
           let lat = val[0];
           let long = val[1];
           let e = latLng(lat, long).toString();
-          if(Object.keys(this.markerObjects).includes(e)){
+          if (Object.keys(this.markerObjects).includes(e)) {
             var myMarkerClusterGroup = this.$refs.clusterMarker.mapObject;
             let m = this.markerObjects[e];
-            myMarkerClusterGroup.zoomToShowLayer(m, function() {
+            myMarkerClusterGroup.zoomToShowLayer(m, function () {
               m.openPopup();
             });
           }
@@ -100,7 +180,7 @@
       }
     },
     methods: {
-      latLng:latLng,
+      latLng: latLng,
       openDetails: function (store) {
         console.log(store)
         this.$emit('display-store', store.store_id)
@@ -108,14 +188,33 @@
       parseCompanyName: function (store_id) {
         return store_id.split("_")[0].split("-").join(" ")
       },
+      parseCompanyId: function (store_id) {
+        return store_id.split("_")[1]
+      },
       formatRank: function (rank) {
-        return Math.floor(rank*100)
+        return Math.floor(rank * 100)
       }
     },
     computed: {
       markerData: function () {
         return this.$store.getters["api/getMarkerData"]
-      }
+      },
+      poorStores: function () {
+        if(this.markerData){
+          return this.markerData.filter((storeObj)=> storeObj.metric_eval === "Poor")
+        }
+      },
+      avgStores: function () {
+        if(this.markerData){
+          return this.markerData.filter((storeObj)=> storeObj.metric_eval === "Average")
+        }
+      },
+      goodStores: function () {
+        if(this.markerData){
+          return this.markerData.filter((storeObj)=> storeObj.metric_eval === "Good")
+        }
+      },
+
     }
   }
 </script>
@@ -124,5 +223,16 @@
   .geoMap {
     height: 55vh;
     width: 100%;
+  }
+
+  .margin-pop {
+    margin: 10px 0 !important;
+  }
+
+  .store-filter {
+    background: #fff;
+    padding: 0 0.5em;
+    border: 1px solid #aaa;
+    border-radius: 0.1em;
   }
 </style>
