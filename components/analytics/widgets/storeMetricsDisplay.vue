@@ -180,7 +180,7 @@
           <div class="column is-12">
             <p id="improving" class="is-size-4 has-text-weight-medium highlight-hook is-family-sans-serif">Is this store improving their
               customer support metrics?</p>
-            <p v-if="storeDetails['performance']['positive'].length === 0" class="is-size-5 has-text-weight-light">This
+            <p v-if="storeDetails['performance']['positive'].length === 0" class="is-size-5 has-text-weight-light is-family-sans-serif">This
               store is not improving in any metric.</p>
             <p class="is-size-5 has-text-weight-light is-family-sans-serif" v-for="(issue, idx) in storeDetails['performance']['positive']"
                :key="idx">
@@ -198,7 +198,7 @@
           <div class="column is-12">
             <p id="worsening" class="is-size-4 has-text-weight-medium highlight-hook is-family-sans-serif">Are there any aspect that this store
               is getting worse at?</p>
-            <p v-if="storeDetails['performance']['negative'].length === 0" class="is-size-5 has-text-weight-light">This
+            <p v-if="storeDetails['performance']['negative'].length === 0" class="is-size-5 has-text-weight-light is-family-sans-serif">This
               store is not getting worse in any metric.</p>
             <p class="is-size-5 has-text-weight-light is-family-sans-serif"
 
