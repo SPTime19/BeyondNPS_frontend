@@ -14,6 +14,10 @@ export function parseStoreIdNumber(storeId) {
   return storeId.split("_")[1]
 }
 
+export function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+
 export function formatTsPlot(storeData) {
   if (storeData) {
     let rankData = storeData;
@@ -21,20 +25,27 @@ export function formatTsPlot(storeData) {
     let metrics = rankData.map((v) => v.metric);
     let benchmark = rankData.map((v) => v.benchmark);
     let ptRadius = 5;
+    let dataset = [];
 
-    let dataset = [{
-      data: metrics,
-      label: "Metric Value",
-      pointRadius: ptRadius,
-      pointBackgroundColor:"#575A89",
-      borderColor: "#575A89"
-    }, {
-      data: benchmark,
-      label: "Benchmark",
-      pointRadius: ptRadius,
-      pointBackgroundColor:"#EC4E20",
-      borderColor: "#EC4E20"
-    }];
+    if(metrics.length > 0){
+      dataset.push({
+        data: metrics,
+        label: "Metric Value",
+        pointRadius: ptRadius,
+        pointBackgroundColor:"#575A89",
+        borderColor: "#575A89"
+      })
+    }
+
+    if(benchmark.length > 0){
+      dataset.push({
+        data: benchmark,
+        label: "Benchmark",
+        pointRadius: ptRadius,
+        pointBackgroundColor:"#EC4E20",
+        borderColor: "#EC4E20"
+      })
+    }
 
     return {
       labels: dates,

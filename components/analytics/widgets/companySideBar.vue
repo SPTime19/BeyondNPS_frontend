@@ -14,15 +14,16 @@
           </option>
         </b-select>
         <p class="is-size-5 has-text-weight-medium" style="margin-top: 1rem">{{selectedMetric.display}}</p>
-        <p class="is-size-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et.</p>
+        <p class="is-size-6" style="margin-bottom: 2rem">{{selectedMetric.description}}</p>
       </div>
       <div class="column is-12">
-<!--        <b-loading :is-full-page="false" :active.sync="dataIsLoading" :can-cancel="false"></b-loading>-->
+        <!--        <b-loading :is-full-page="false" :active.sync="dataIsLoading" :can-cancel="false"></b-loading>-->
         <topKMarkers :markers="topMarkers"></topKMarkers>
       </div>
       <div class="column is-12">
-<!--        <b-loading :is-full-page="false" :active.sync="dataIsLoading" :can-cancel="false"></b-loading>-->
-        <rankBarPlot v-if="dataIsLoaded" :chartData="formatRankToPlot(rankedCompanies)" :chartdata="formatRankToPlot(rankedCompanies)" :options="rankPlotOption"></rankBarPlot>
+        <!--        <b-loading :is-full-page="false" :active.sync="dataIsLoading" :can-cancel="false"></b-loading>-->
+        <rankBarPlot v-if="dataIsLoaded" :chartData="formatRankToPlot(rankedCompanies)"
+                     :chartdata="formatRankToPlot(rankedCompanies)" :options="rankPlotOption"></rankBarPlot>
       </div>
     </div>
   </section>
@@ -41,12 +42,55 @@
     },
     data: function () {
       return {
-        selectedMetric: {id: "rating", display: "Review Rating"},
+        selectedMetric: {
+          id: "rating",
+          display: "Review Rating",
+          description: "Average user review rating from all data sources."
+        },
         availableMetrics: [
-          {id: "rating", display: "Review Rating"},
-          {id: "product_issues", display: "Product Issues"}],
+          {
+            id: "rating",
+            display: "Review Rating",
+            description: "Average user review rating from all data sources."
+          },
+          {
+            id: "product_issues",
+            display: "(General) Product Issues",
+            description: "Percentage of complaints related to products sold."
+          },
+          {
+            id: "product_issues_Damaged",
+            display: "Damaged Products",
+            description: "Percentage of complaints related to damaged products."
+          },
+          {
+            id: "product_issues_Quality",
+            display: "Product Quality",
+            description: "Percentage of complaints related to product quality."
+          },
+          {
+            id: "business_issues",
+            display: "(General) Business Issues",
+            description: "Percentage of complaints related to business processes."
+          }, {
+            id: "business_issues_Payment",
+            display: "Payment issues",
+            description: "Percentage of complaints related to payment."
+          }, {
+            id: "business_issues_Maintenance",
+            display: "Maintenance Issues",
+            description: "Percentage of complaints related to maintenance services."
+          }, {
+            id: "business_issues_Customer Services",
+            display: "Customer Services issues",
+            description: "Percentage of complaints related to customer services."
+          }, {
+            id: "business_issues_Delivery",
+            display: "Delivery Issues",
+            description: "Percentage of complaints related to delivery."
+          },],
         rankPlotOption: {
-          legend: { display: false },
+          legend: {display: false},
           title: {
             display: true,
             text: 'Average Ranking'
@@ -57,18 +101,18 @@
     },
     methods: {
       formatRankToPlot: function (rankData) {
-        if(rankData){
-          let companies = Object.keys(rankData).map((comp)=> formatCompanyName(comp));
+        if (rankData) {
+          let companies = Object.keys(rankData).map((comp) => formatCompanyName(comp));
           let ranks = Object.values(rankData);
 
           let background = [];
-          for(let idx in companies){
+          for (let idx in companies) {
             background.push("#c45850")
 
           }
           let dataset = [{
             data: ranks,
-            label:"sss",
+            label: "sss",
             background: background
           }];
 
@@ -81,11 +125,11 @@
       }
     },
     watch: {
-      selectedMetric: async function(val){
-        if(val){
+      selectedMetric: async function (val) {
+        if (val) {
           let ref = this;
           this.$store.dispatch('api/FETCH_MARKER_METRIC', {metric: val.id});
-          await this.$store.dispatch('api/FETCH_COMPANY_METRICS', {metric: val.id}).then(()=>{
+          await this.$store.dispatch('api/FETCH_COMPANY_METRICS', {metric: val.id}).then(() => {
             ref.$store.commit("api/setDataLoading", false);
           })
         }
@@ -96,10 +140,10 @@
     },
     computed: {
       topMarkers: function () {
-        if(this.rankedCompanies){
+        if (this.rankedCompanies) {
           let topk = [];
           let companyNames = Object.keys(this.rankedCompanies);
-          for(let i = 0;i<=3;i++){
+          for (let i = 0; i <= 3; i++) {
             topk.push(companyNames[i])
           }
           return topk

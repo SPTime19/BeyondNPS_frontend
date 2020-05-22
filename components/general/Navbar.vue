@@ -1,27 +1,14 @@
 <template>
-  <nav
-    class="navbar header has-shadow is-primary"
-    role="navigation"
-    aria-label="main navigation"
-  >
+  <nav class="navbar is-primary is-fixed-top is-hidden-mobile">
     <div class="navbar-brand">
-      <a
-        class="navbar-item"
-        href="/"
-      >
-<!--        <img-->
-<!--          src="~assets/buefy.png"-->
-<!--          alt="Buefy"-->
-<!--          height="28"-->
-<!--        >-->
-      </a>
-
-      <div class="navbar-burger">
-        <span />
-        <span />
-        <span />
-      </div>
+      <nuxt-link class="navbar-item main-logo-desktop" to="/">
+        <img src="~assets/logo.png" alt="">
+      </nuxt-link>
     </div>
+
+    <div class="navbar-menu">
+    </div>
+
   </nav>
 </template>
 
@@ -32,5 +19,8 @@
 </script>
 
 <style scoped>
+  .main-logo-desktop {
+
+  }
 
 </style>

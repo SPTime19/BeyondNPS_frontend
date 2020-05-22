@@ -1,24 +1,56 @@
 <template>
-  <section class="hero is-medium is-primary is-bold">
+  <div class="hero main-hero is-black is-bold has-background">
+    <img alt="Fill Murray" class="hero-background is-transparent" src="~assets/images/back-0.jpg" />
+    <div class="hero-head">
+
+    </div>
     <div class="hero-body">
       <div class="container">
-        <h1 class="title">
-          Beyond NPS
-        </h1>
-        <h2 class="subtitle">
-          Team 19
-        </h2>
+        <div class="columns is-mobile is-multiline is-vcentered">
+          <div class="column is-5-tablet is-12-mobile">
+            <p class="is-size-2 has-text-weight-medium">Beyond NPS</p>
+            <p class="subtitle">DS4A - Team 19</p>
+          </div>
+          <div class="column">
+          </div>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>
     export default {
-        name: "landpageHero"
+        name: "landpageHero",
+
     }
 </script>
 
 <style scoped>
+  .title-margin {
+    margin: 3.5rem 1.5rem;
+  }
 
+  .subtitles-margin {
+    padding: 2rem 1rem;
+    background-color: #FFDC96;
+    border-radius: 1rem;
+    margin-top: 5rem;
+
+  }
+
+  .hero.has-background {
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-background {
+    position: absolute;
+    object-fit: cover;
+    object-position: center center;
+    width: 100%;
+    height: 100%;
+  }
+  .hero-background.is-transparent {
+    opacity: 40%;
+  }
 </style>

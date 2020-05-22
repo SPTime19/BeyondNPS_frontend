@@ -79,7 +79,7 @@
         selectedMetric: {
           id: "rating",
           display: "Review Rating",
-          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et."
+          description: "Average user review rating from all data sources."
         },
         tsPlotOption: {
           // responsive: false,
@@ -101,13 +101,44 @@
           {
             id: "rating",
             display: "Review Rating",
-            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et."
+            description: "Average user review rating from all data sources."
           },
           {
             id: "product_issues",
-            display: "Product Issues",
-            description: "Lorem  sed do eiusmod tempor incididunt ut labore et."
-          }],
+            display: "(General) Product Issues",
+            description: "Percentage of complaints related to products sold."
+          },
+          {
+            id: "product_issues_Damaged",
+            display: "Damaged Products",
+            description: "Percentage of complaints related to damaged products."
+          },
+          {
+            id: "product_issues_Quality",
+            display: "Product Quality",
+            description: "Percentage of complaints related to product quality."
+          },
+          {
+            id: "business_issues",
+            display: "(General) Business Issues",
+            description: "Percentage of complaints related to business processes."
+          },{
+            id: "business_issues_Payment",
+            display: "Payment issues",
+            description: "Percentage of complaints related to payment."
+          },{
+            id: "business_issues_Maintenance",
+            display: "Maintenance Issues",
+            description: "Percentage of complaints related to maintenance services."
+          },{
+            id: "business_issues_Customer Services",
+            display: "Customer Services issues",
+            description: "Percentage of complaints related to customer services."
+          },{
+            id: "business_issues_Delivery",
+            display: "Delivery Issues",
+            description: "Percentage of complaints related to delivery."
+          },],
       }
     },
     watch: {

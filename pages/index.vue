@@ -9,6 +9,7 @@
 
   export default {
     name: 'HomePage',
+    layout: "landPage",
     components: {
       analyticsWrapper
     }

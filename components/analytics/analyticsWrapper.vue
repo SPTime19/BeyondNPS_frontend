@@ -1,23 +1,26 @@
 <template>
-  <section class="analytics-container">
-  <div class="container">
-    <div class="columns">
-      <div class="column is-hidden-mobile is-3-tablet">
-        <companySideBar></companySideBar>
+  <section>
+    <landpageHero :backgroundImage="0"></landpageHero>
+    <section class="analytics-container">
+      <div class="container">
+        <div class="columns">
+          <div class="column is-hidden-mobile is-3-tablet">
+            <companySideBar></companySideBar>
+          </div>
+          <div class="column is-12-mobile is-9-tablet" style="z-index: 40">
+            <geoMap v-on="{'display-store': displayStoreMetrics}" :isMainPage="true"></geoMap>
+          </div>
+        </div>
+        <b-modal :active.sync="isModalActive"
+                 has-modal-card
+                 :destroy-on-hide="false"
+                 aria-role="dialog"
+                 aria-modal>
+          <storeMetricsDisplay :storeId="activeStoreId"></storeMetricsDisplay>
+        </b-modal>
       </div>
-      <div class="column is-12-mobile is-9-tablet" style="z-index: 40">
-        <geoMap v-on="{'display-store': displayStoreMetrics}" :isMainPage="true"></geoMap>
-      </div>
-    </div>
-    <b-modal :active.sync="isModalActive"
-             has-modal-card
-             :destroy-on-hide="false"
-             aria-role="dialog"
-             aria-modal>
-      <storeMetricsDisplay :storeId="activeStoreId"></storeMetricsDisplay>
-    </b-modal>
-  </div>
-    <b-loading :is-full-page="true" :active.sync="isLoading" :can-cancel="false"></b-loading>
+      <b-loading :is-full-page="true" :active.sync="isLoading" :can-cancel="false"></b-loading>
+    </section>
   </section>
 </template>
 
@@ -25,10 +28,12 @@
   import companySideBar from '~/components/analytics/widgets/companySideBar'
   import geoMap from '~/components/analytics/widgets/geoMap'
   import storeMetricsDisplay from '~/components/analytics/widgets/storeMetricsDisplay'
+  import landpageHero from '~/components/general/landpageHero'
 
   export default {
     name: "analyticsWrapper",
     components: {
+      landpageHero,
       companySideBar,
       geoMap,
       storeMetricsDisplay
