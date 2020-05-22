@@ -9,7 +9,7 @@
         <div class="columns is-mobile is-multiline is-vcentered">
           <div class="column is-5-tablet is-12-mobile">
             <p class="is-size-2 has-text-weight-medium">Beyond NPS</p>
-            <p class="subtitle">DS4A - Team 19</p>
+            <p class="subtitle is-family-sans-serif">DS4A - Team 19</p>
           </div>
           <div class="column">
           </div>

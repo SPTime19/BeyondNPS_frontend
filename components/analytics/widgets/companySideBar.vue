@@ -7,13 +7,14 @@
       <div class="column is-12">
         <b-select v-model="selectedMetric" expanded placeholder="Select a metric">
           <option
+            class="is-family-sans-serif"
             v-for="option in availableMetrics"
             :value="option"
             :key="option.id">
             {{ option.display }}
           </option>
         </b-select>
-        <p class="is-size-5 has-text-weight-medium" style="margin-top: 1rem">{{selectedMetric.display}}</p>
+        <p class="is-size-5 has-text-weight-medium is-family-sans-serif" style="margin-top: 1rem">{{selectedMetric.display}}</p>
         <p class="is-size-6" style="margin-bottom: 2rem">{{selectedMetric.description}}</p>
       </div>
       <div class="column is-12">

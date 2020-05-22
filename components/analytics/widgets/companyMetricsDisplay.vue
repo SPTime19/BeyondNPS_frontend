@@ -63,7 +63,7 @@
               </div>
             </div>
             <div class="column">
-              <p class="is-size-6 is-gray">No information available for this company.</p>
+              <p class="is-size-6" style="color: gray">No information available for this company.</p>
             </div>
           </div>
         </div>
@@ -89,7 +89,7 @@
               </div>
             </div>
             <div class="column">
-              <p class="is-size-6 is-gray">No information available for this company.</p>
+              <p class="is-size-6 " style="color: gray">No information available for this company.</p>
             </div>
           </div>
         </div>

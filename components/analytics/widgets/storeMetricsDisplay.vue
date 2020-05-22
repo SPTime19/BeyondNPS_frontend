@@ -10,7 +10,7 @@
         </div>
 
         <div class="column is-12" style="position: relative;top: -150px;padding: 1rem 3rem">
-          <div class="container">
+          <div class="container is-family-sans-serif">
             <div class="card" style="border-radius: 1rem">
               <div class="card-content">
                 <div class="columns is-mobile is-multiline is-vcentered">
@@ -40,7 +40,14 @@
                       <!--              <p class="is-size-4 has-text-weight-medium ">Summary</p>-->
                       <!--            </div>-->
                       <div class="column is-6">
-                        <p>General Rank</p>
+                        <p>Category Rank
+                          <b-tooltip
+                            label="Average rank within similar sized stores"
+                            size="is-small"
+                            multilined>
+                            <b-icon pack="fas" size="is-small" icon="question-circle"></b-icon>
+                          </b-tooltip>
+                        </p>
                         <p class="is-size-4 has-text-weight-bold">{{storeDetails["rankings"]["type_ranking"]["result"]}}
                           <b-tooltip
                             :label="formatRankPercentile(storeDetails['rankings']['type_ranking']['rank'])"
@@ -55,7 +62,7 @@
                       <div class="column is-6">
                         <p>Company Rank
                           <b-tooltip
-                            label="Average rank within same company"
+                            label="Average rank within the same company"
                             size="is-small"
                             multilined>
                             <b-icon pack="fas" size="is-small" icon="question-circle"></b-icon>
@@ -109,8 +116,8 @@
 
         <div class="column is-12 columns is-multiline" style="position: relative;top: -150px;padding: 1rem 3rem">
           <div class="column is-12">
-            <p id="good-points" class="is-size-4 has-text-weight-medium highlight-hook">What is this store good at?</p>
-            <p class="is-size-5 has-text-weight-light" v-for="(issue, idx) in storeDetails['highlights']['best']"
+            <p id="good-points" class="is-size-4 has-text-weight-medium highlight-hook is-family-sans-serif">What is this store good at?</p>
+            <p class="is-size-5 has-text-weight-light is-family-sans-serif" v-for="(issue, idx) in storeDetails['highlights']['best']"
                :key="idx">
 
               <span v-if="issue.index !== 'rating'">
@@ -141,9 +148,9 @@
           </div>
 
           <div class="column is-12">
-            <p id="problems" class="is-size-4 has-text-weight-medium highlight-hook">What kind of problem should I expect
+            <p id="problems" class="is-size-4 has-text-weight-medium highlight-hook is-family-sans-serif">What kind of problem should I expect
               when buying from this store?</p>
-            <p class="is-size-5 has-text-weight-light" v-for="(issue, idx) in storeDetails['highlights']['worst']"
+            <p class="is-size-5 has-text-weight-light is-family-sans-serif" v-for="(issue, idx) in storeDetails['highlights']['worst']"
                :key="idx">
             <span v-if="issue.index !== 'rating'">
                           <b-tooltip
@@ -171,11 +178,11 @@
           </div>
 
           <div class="column is-12">
-            <p id="improving" class="is-size-4 has-text-weight-medium highlight-hook">Is this store improving their
+            <p id="improving" class="is-size-4 has-text-weight-medium highlight-hook is-family-sans-serif">Is this store improving their
               customer support metrics?</p>
             <p v-if="storeDetails['performance']['positive'].length === 0" class="is-size-5 has-text-weight-light">This
               store is not improving in any metric.</p>
-            <p class="is-size-5 has-text-weight-light" v-for="(issue, idx) in storeDetails['performance']['positive']"
+            <p class="is-size-5 has-text-weight-light is-family-sans-serif" v-for="(issue, idx) in storeDetails['performance']['positive']"
                :key="idx">
               The store is
               <b-tooltip
@@ -189,11 +196,11 @@
           </div>
 
           <div class="column is-12">
-            <p id="worsening" class="is-size-4 has-text-weight-medium highlight-hook">Are there any aspect that this store
+            <p id="worsening" class="is-size-4 has-text-weight-medium highlight-hook is-family-sans-serif">Are there any aspect that this store
               is getting worse at?</p>
             <p v-if="storeDetails['performance']['negative'].length === 0" class="is-size-5 has-text-weight-light">This
               store is not getting worse in any metric.</p>
-            <p class="is-size-5 has-text-weight-light"
+            <p class="is-size-5 has-text-weight-light is-family-sans-serif"
 
                v-for="(issue, idx) in storeDetails['performance']['negative']"
                :key="idx">
@@ -209,7 +216,7 @@
           </div>
 
           <div class="column is-6">
-            <p class="is-size-3 has-text-weight-bold highlight-hook">Metric performance</p>
+            <p class="is-size-3 has-text-weight-bold highlight-hook is-family-sans-serif">Metric performance</p>
             <b-select v-model="selectedMetric" expanded placeholder="Select a metric">
               <option
                 v-for="option in availableMetrics"
@@ -255,19 +262,50 @@
         selectedMetric: {
           id: "rating",
           display: "Review Rating",
-          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et."
+          description: "Average user review rating from all data sources."
         },
         availableMetrics: [
           {
             id: "rating",
             display: "Review Rating",
-            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et."
+            description: "Average user review rating from all data sources."
           },
           {
             id: "product_issues",
-            display: "Product Issues",
-            description: "Lorem  sed do eiusmod tempor incididunt ut labore et."
-          }],
+            display: "(General) Product Issues",
+            description: "Percentage of complaints related to products sold."
+          },
+          {
+            id: "product_issues_Damaged",
+            display: "Damaged Products",
+            description: "Percentage of complaints related to damaged products."
+          },
+          {
+            id: "product_issues_Quality",
+            display: "Product Quality",
+            description: "Percentage of complaints related to product quality."
+          },
+          {
+            id: "business_issues",
+            display: "(General) Business Issues",
+            description: "Percentage of complaints related to business processes."
+          }, {
+            id: "business_issues_Payment",
+            display: "Payment issues",
+            description: "Percentage of complaints related to payment."
+          }, {
+            id: "business_issues_Maintenance",
+            display: "Maintenance Issues",
+            description: "Percentage of complaints related to maintenance services."
+          }, {
+            id: "business_issues_Customer Services",
+            display: "Customer Services issues",
+            description: "Percentage of complaints related to customer services."
+          }, {
+            id: "business_issues_Delivery",
+            display: "Delivery Issues",
+            description: "Percentage of complaints related to delivery."
+          },],
         tsPlotOption: {
           responsive: false,
           legend: {display: true},

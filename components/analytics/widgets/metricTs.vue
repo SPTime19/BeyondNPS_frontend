@@ -1,7 +1,7 @@
 <template>
   <div class="columns is-multiline">
     <div class="column is-4">
-      <p class="is-size-3 has-text-weight-bold highlight-hook" style="margin-bottom: 2rem">Metric performance</p>
+      <p class="is-size-3 has-text-weight-bold highlight-hook is-family-sans-serif" style="margin-bottom: 2rem">Metric performance</p>
       <b-select v-model="selectedMetric" expanded placeholder="Select a metric">
         <option
           v-for="option in availableMetrics"
@@ -11,7 +11,6 @@
         </option>
       </b-select>
       <p class="is-size-6" style="margin-top: 1rem">{{selectedMetric.description}}</p>
-
     </div>
     <div class="column is-8">
       <b-loading :is-full-page="false" :active.sync="isLoadingBars" :can-cancel="false"></b-loading>
