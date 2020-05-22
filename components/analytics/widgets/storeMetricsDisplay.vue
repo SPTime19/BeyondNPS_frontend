@@ -395,8 +395,8 @@
         if (storeData) {
           let rankData = storeData;
           let dates = rankData.map((v) => v.date_comment);
-          let metrics = rankData.map((v) => v.metric);
-          let benchmark = rankData.map((v) => v.benchmark);
+          let metrics = rankData.map((v) => v.metric).map((val)=> Math.round(val * 100) / 100);
+          let benchmark = rankData.map((v) => v.benchmark).map((val)=> Math.round(val * 100) / 100);
 
           let dataset = [{
             data: metrics,
@@ -419,7 +419,7 @@
         if (storeData) {
           let rankData = storeData["highlights"]["general"]
           let issues = rankData.map((v) => formatIssueType(v.index));
-          let ranks = rankData.map((v) => v.rank_val);
+          let ranks = rankData.map((v) => v.rank_val).map((val)=> Math.round(val * 100) / 100);
 
           let dataset = [{
             data: ranks,

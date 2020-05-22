@@ -42,11 +42,11 @@
       formatDistPlot: function (storeData) {
         if (storeData) {
           let dataset = [{
-            data: storeData.company,
+            data: storeData.company.map((val)=> Math.round(val * 100) / 100),
             label: "Company",
             backgroundColor: "#575A89"
           }, {
-            data: storeData.benchmark,
+            data: storeData.benchmark.map((val)=> Math.round(val * 100) / 100),
             label: "Benchmark",
             backgroundColor: "#EC4E20"
           }];

@@ -62,8 +62,8 @@
                 <!--                      v-for="(level, j) in getWarningLevel(store.worsening)" :key="j"></b-icon>-->
               </div>
             </div>
-            <div class="column">
-              <p class="is-size-6" style="color: gray">No information available for this company.</p>
+            <div class="column" v-else>
+              <p class="is-size-6" style="color: gray" >No information available for this company.</p>
             </div>
           </div>
         </div>
@@ -88,7 +88,7 @@
                 </b-button>
               </div>
             </div>
-            <div class="column">
+            <div class="column" v-else>
               <p class="is-size-6 " style="color: gray">No information available for this company.</p>
             </div>
           </div>

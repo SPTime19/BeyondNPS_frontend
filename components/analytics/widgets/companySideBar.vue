@@ -104,7 +104,7 @@
       formatRankToPlot: function (rankData) {
         if (rankData) {
           let companies = Object.keys(rankData).map((comp) => formatCompanyName(comp));
-          let ranks = Object.values(rankData);
+          let ranks = Object.values(rankData).map((val)=> Math.round(val * 100) / 100);
 
           let background = [];
           for (let idx in companies) {
