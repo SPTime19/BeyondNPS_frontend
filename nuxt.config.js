@@ -60,7 +60,7 @@ export default {
   },
   env: {
     API: {
-      HOST: (process.env.NODE_ENV === "development")?"http://localhost:8000":"http://localhost:8000/"
+      HOST: (process.env.NODE_ENV === "development")?"http://localhost:8000":"http://3.16.156.207:8000"
     }
   },
   /*
