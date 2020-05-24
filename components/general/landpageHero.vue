@@ -1,6 +1,6 @@
 <template>
   <div class="hero main-hero is-black is-bold has-background">
-    <img alt="Fill Murray" class="hero-background is-transparent" src="~assets/images/back-0.jpg" />
+    <img alt="Fill Murray" class="hero-background is-transparent" src="~assets/images/background_2.jpg" />
     <div class="hero-head">
 
     </div>
@@ -8,8 +8,8 @@
       <div class="container">
         <div class="columns is-mobile is-multiline is-vcentered">
           <div class="column is-5-tablet is-12-mobile">
-            <p class="is-size-2 has-text-weight-medium">Beyond NPS</p>
-            <p class="subtitle is-family-sans-serif">DS4A - Team 19</p>
+            <p class="is-size-2 has-text-weight-medium has-text-primary">Beyond NPS</p>
+            <p class="subtitle is-family-sans-serif has-text-primary">DS4A - Team 19</p>
           </div>
           <div class="column">
           </div>
@@ -51,6 +51,6 @@
     height: 100%;
   }
   .hero-background.is-transparent {
-    opacity: 40%;
+    opacity: 100%;
   }
 </style>

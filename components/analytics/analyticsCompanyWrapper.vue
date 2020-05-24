@@ -6,7 +6,7 @@
         <companyMetricsDisplay v-on="{'focus-store': focusMarker}"></companyMetricsDisplay>
       </div>
       <div class="column is-12-mobile is-12-tablet" style="z-index: 40">
-        <b-tabs position="is-centered" class="block">
+        <b-tabs position="is-centered" class="block" v-model="tabActive">
           <b-tab-item label="Map">
             <div class="column is-12">
               <geoMap v-if="markerData"
@@ -51,7 +51,8 @@
         isModalActive: false,
         isLoading: false,
         activeStoreId: "",
-        selectedMarker: null
+        selectedMarker: null,
+        tabActive: 0
       }
     },
     methods: {
@@ -75,6 +76,7 @@
           })
       },
       focusMarker(payload){
+        this.tabActive = 0
         this.selectedMarker = payload.reference
       }
     },

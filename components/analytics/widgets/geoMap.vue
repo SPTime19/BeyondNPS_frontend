@@ -168,7 +168,7 @@
     data: function () {
       return {
         isLoading: false,
-        zoom: 9,
+        zoom: 10,
         spCoordinates: latLng(-23.5505, -46.666),
         url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',

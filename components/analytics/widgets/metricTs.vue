@@ -78,7 +78,7 @@
         selectedMetric: {
           id: "rating",
           display: "Review Rating",
-          description: "Average user review rating from all data sources."
+          description: "Average user review rating from all data sources. (higher is better)"
         },
         tsPlotOption: {
           // responsive: false,
@@ -100,43 +100,43 @@
           {
             id: "rating",
             display: "Review Rating",
-            description: "Average user review rating from all data sources."
+            description: "Average user review rating from all data sources. (higher is better)"
           },
           {
             id: "product_issues",
             display: "(General) Product Issues",
-            description: "Percentage of complaints related to products sold."
+            description: "Percentage of complaints related to products sold. (lower is better)"
           },
           {
             id: "product_issues_Damaged",
             display: "Damaged Products",
-            description: "Percentage of complaints related to damaged products."
+            description: "Percentage of complaints related to damaged products. (lower is better)"
           },
           {
             id: "product_issues_Quality",
             display: "Product Quality",
-            description: "Percentage of complaints related to product quality."
+            description: "Percentage of complaints related to product quality.  (lower is better)"
           },
           {
             id: "business_issues",
             display: "(General) Business Issues",
-            description: "Percentage of complaints related to business processes."
+            description: "Percentage of complaints related to business processes. (lower is better)"
           },{
             id: "business_issues_Payment",
             display: "Payment issues",
-            description: "Percentage of complaints related to payment."
+            description: "Percentage of complaints related to payment. (lower is better)"
           },{
             id: "business_issues_Maintenance",
             display: "Maintenance Issues",
-            description: "Percentage of complaints related to maintenance services."
+            description: "Percentage of complaints related to maintenance services. (lower is better)"
           },{
             id: "business_issues_Customer Services",
             display: "Customer Services issues",
-            description: "Percentage of complaints related to customer services."
+            description: "Percentage of complaints related to customer services. (lower is better)"
           },{
             id: "business_issues_Delivery",
             display: "Delivery Issues",
-            description: "Percentage of complaints related to delivery."
+            description: "Percentage of complaints related to delivery. (lower is better)"
           },],
       }
     },

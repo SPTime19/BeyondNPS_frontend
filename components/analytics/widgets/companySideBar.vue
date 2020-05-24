@@ -24,7 +24,7 @@
       <div class="column is-12">
         <!--        <b-loading :is-full-page="false" :active.sync="dataIsLoading" :can-cancel="false"></b-loading>-->
         <rankBarPlot v-if="dataIsLoaded" :chartData="formatRankToPlot(rankedCompanies)"
-                     :chartdata="formatRankToPlot(rankedCompanies)" :options="rankPlotOption"></rankBarPlot>
+                     :options="rankPlotOption"></rankBarPlot>
       </div>
     </div>
   </section>
