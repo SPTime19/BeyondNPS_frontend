@@ -19,8 +19,9 @@ $ npm run start
 $ npm run generate
 ```
 
-## Deploy easy
+## Deploy easy with docker
 
+> ./run-compose.sh
 
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
